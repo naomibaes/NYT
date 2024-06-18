@@ -73,7 +73,7 @@ def extract_metadata(api_results):
 
     return all_metadata
 
-def save_to_csv(data, file_path, delimiter="|||||"):
+def save_to_csv(data, file_path, delimiter="|||||", missing_value="NA"):
     """
     Saves a list of dictionaries to a CSV file with the 
     """
@@ -82,6 +82,8 @@ def save_to_csv(data, file_path, delimiter="|||||"):
         writer = csv.DictWriter(file, fieldnames=data[0].keys(), delimiter=CHR255)
         writer.writeheader()
         for row in data:
+            # Replace missing values with "NA"
+            row = {key: value if value else missing_value for key, value in row.items()}
             writer.writerow(row)
     # re open and replace delimiter with "|||||"
     with open(file_path, 'r') as file:
@@ -110,7 +112,7 @@ def load_from_csv(file_path, delimiter="|||||"):
 
 
 
-def get_corpus(start_year, end_year, logger):
+def get_corpus(start_year, end_year, logger, delimiter = '|||||', missing_value='NA'):
     if logger is None:
         logger = logging.getLogger('NYT downloader')
     # Get the API key
@@ -138,7 +140,7 @@ def get_corpus(start_year, end_year, logger):
             except Exception as e:
                 logger.error(f"Error fetching data for {year}-{month}: {e}")
                 continue
-            save_to_csv(metadata, file_path)
+            save_to_csv(metadata, file_path, delimiter=delimiter, missing_value=missing_value)
             logger.info(f"Data saved to {file_path}")
     
 def concat_data(out_file='all_nyt_data.csv', dir_path=OUT_DIR, logger=None):
