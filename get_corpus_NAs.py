@@ -1,3 +1,8 @@
+# Author: Hugo Keenan
+# Aim: This script retrieves article data from the NYT archive API for a user specified year range and saves it to a file of each month's data before concatenating all individual files into a single CSV file.
+## Note: It saves each month's data to a separate file in the /corpus directory. concat_data function concatenates files in folder to a single file.
+## Note: To run this script successfully, you need to get your API key from the NYT Developer site and save it in a file called "nyt_api_key.txt"
+
 import csv
 import requests
 import os
