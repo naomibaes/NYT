@@ -4,6 +4,7 @@
 ## Note: To run this script successfully, you need to get your API key from the NYT Developer site and save it in a file called "nyt_api_key.txt"
 
 import csv
+import sys
 import requests
 import os
 import time
@@ -151,6 +152,10 @@ def get_corpus(start_year, end_year, logger, delimiter = '|||||', missing_value=
 def concat_data(out_file='all_nyt_data.csv', dir_path=OUT_DIR, logger=None):
     if logger is None:
         logger = logging.getLogger('NYT downloader')
+    # Check if output file already exists
+    if os.path.exists(out_file):
+        logger.error(f"Output file {out_file} already exists. Exiting.")
+        sys.exit(1)
     # Get all file paths
     file_paths = [os.path.join(dir_path, file) for file in os.listdir(dir_path) if file.endswith('.csv')]
     # Sort the files
