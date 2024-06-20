@@ -153,17 +153,18 @@ def concat_data(out_file='all_nyt_data.csv', dir_path=OUT_DIR, logger=None):
         logger = logging.getLogger('NYT downloader')
     # Get all file paths
     file_paths = [os.path.join(dir_path, file) for file in os.listdir(dir_path) if file.endswith('.csv')]
+    # Sort the files
+    file_paths.sort(key=lambda x: int(x.split('_')[-2]) * 100 + int(x.split('_')[-1].split('.')[0]))
     logger.info(f"Found {len(file_paths)} files.")
-    # Load data from each file
-    all_data = []
-    logger.info("Loading data...")
-    for file_path in tqdm(file_paths):
-        data = load_from_csv(file_path)
-        all_data.extend(data)
-    # Save all data to a single file
+    # Load data from each file and append to the output file
     logger.info(f"Saving data to {out_file}, may take a while...")
-    save_to_csv(all_data, out_file)
-
+    for i, file_path in tqdm(enumerate(file_paths)):
+        with open(file_path, 'r') as file:
+            file_content = file.read()
+        if not i == 0:
+            file_content = file_content.split('\n', 1)[1]
+        with open(out_file, 'a') as file:
+            file.write(file_content)
 
 if __name__ == '__main__':
     # Set up logging
