@@ -1,4 +1,10 @@
+# Author: Hugo Keenan
+# Aim: This script retrieves article data from the NYT archive API for a user specified year range and saves it to a file of each month's data before concatenating all individual files into a single CSV file.
+## Note: It saves each month's data to a separate file in the /corpus directory. concat_data function concatenates files in folder to a single file.
+## Note: To run this script successfully, you need to get your API key from the NYT Developer site and save it in a file called "nyt_api_key.txt"
+
 import csv
+import sys
 import requests
 import os
 import time
@@ -73,7 +79,7 @@ def extract_metadata(api_results):
 
     return all_metadata
 
-def save_to_csv(data, file_path, delimiter="|||||"):
+def save_to_csv(data, file_path, delimiter="|||||", missing_value="NA"):
     """
     Saves a list of dictionaries to a CSV file with the 
     """
@@ -82,6 +88,8 @@ def save_to_csv(data, file_path, delimiter="|||||"):
         writer = csv.DictWriter(file, fieldnames=data[0].keys(), delimiter=CHR255)
         writer.writeheader()
         for row in data:
+            # Replace missing values with "NA"
+            row = {key: value if value else missing_value for key, value in row.items()}
             writer.writerow(row)
     # re open and replace delimiter with "|||||"
     with open(file_path, 'r') as file:
@@ -110,7 +118,7 @@ def load_from_csv(file_path, delimiter="|||||"):
 
 
 
-def get_corpus(start_year, end_year, logger):
+def get_corpus(start_year, end_year, logger, delimiter = '|||||', missing_value='NA'):
     if logger is None:
         logger = logging.getLogger('NYT downloader')
     # Get the API key
@@ -138,25 +146,30 @@ def get_corpus(start_year, end_year, logger):
             except Exception as e:
                 logger.error(f"Error fetching data for {year}-{month}: {e}")
                 continue
-            save_to_csv(metadata, file_path)
+            save_to_csv(metadata, file_path, delimiter=delimiter, missing_value=missing_value)
             logger.info(f"Data saved to {file_path}")
     
 def concat_data(out_file='all_nyt_data.csv', dir_path=OUT_DIR, logger=None):
     if logger is None:
         logger = logging.getLogger('NYT downloader')
+    # Check if output file already exists
+    if os.path.exists(out_file):
+        logger.error(f"Output file {out_file} already exists. Exiting.")
+        sys.exit(1)
     # Get all file paths
     file_paths = [os.path.join(dir_path, file) for file in os.listdir(dir_path) if file.endswith('.csv')]
+    # Sort the files
+    file_paths.sort(key=lambda x: int(x.split('_')[-2]) * 100 + int(x.split('_')[-1].split('.')[0]))
     logger.info(f"Found {len(file_paths)} files.")
-    # Load data from each file
-    all_data = []
-    logger.info("Loading data...")
-    for file_path in tqdm(file_paths):
-        data = load_from_csv(file_path)
-        all_data.extend(data)
-    # Save all data to a single file
+    # Load data from each file and append to the output file
     logger.info(f"Saving data to {out_file}, may take a while...")
-    save_to_csv(all_data, out_file)
-
+    for i, file_path in tqdm(enumerate(file_paths)):
+        with open(file_path, 'r') as file:
+            file_content = file.read()
+        if not i == 0:
+            file_content = file_content.split('\n', 1)[1]
+        with open(out_file, 'a') as file:
+            file.write(file_content)
 
 if __name__ == '__main__':
     # Set up logging
