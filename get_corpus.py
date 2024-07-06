@@ -18,7 +18,7 @@ API_KEY_FILE_PATH = 'nyt_api_key.txt'
 BASE_URL = 'https://api.nytimes.com/svc/archive/v1/{year}/{month}.json?api-key={key}'
 MAX_RETRY = 10
 RETRY_DELAY = 1
-CHR255 = chr(255)
+RARE_DELIMITER = '\u241d'
 
 def fetch_from_api(year, month, key, logger, retry_count=0):
     """
@@ -83,9 +83,9 @@ def save_to_csv(data, file_path, delimiter="|||||", missing_value="NA"):
     """
     Saves a list of dictionaries to a CSV file with the 
     """
-    # save as CSV with delimiter = chr(255)
+    # save as CSV with rare delimiter
     with open(file_path, 'w', newline='') as file:
-        writer = csv.DictWriter(file, fieldnames=data[0].keys(), delimiter=CHR255)
+        writer = csv.DictWriter(file, fieldnames=data[0].keys(), delimiter=RARE_DELIMITER)
         writer.writeheader()
         for row in data:
             # Replace missing values with "NA"
@@ -94,7 +94,7 @@ def save_to_csv(data, file_path, delimiter="|||||", missing_value="NA"):
     # re open and replace delimiter with "|||||"
     with open(file_path, 'r') as file:
         text = file.read()
-        text = text.replace(CHR255, delimiter)
+        text = text.replace(RARE_DELIMITER, delimiter)
     with open(file_path, 'w') as file:
         file.write(text)
 
@@ -105,12 +105,12 @@ def load_from_csv(file_path, delimiter="|||||"):
     file_name, file_extension = os.path.splitext(file_path)
     with open(file_path, 'r') as file:
         text = file.read()
-        text = text.replace(delimiter, CHR255)
+        text = text.replace(delimiter, RARE_DELIMITER)
     temp_file_path = f"{file_name}_temp.{file_extension}"
     with open(temp_file_path, 'w') as file:
         file.write(text)
     with open(temp_file_path, 'r', newline='') as file:
-        reader = csv.DictReader(file, delimiter=CHR255)
+        reader = csv.DictReader(file, delimiter=RARE_DELIMITER)
         data = [row for row in reader]
     # remove the temp file
     os.remove(temp_file_path)
