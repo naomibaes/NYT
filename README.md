@@ -88,4 +88,4 @@ This data statement provides a comprehensive overview of the New York Times Arti
 
 ### Citation:
 Please cite this corpus as follows:
-Hugo Lyons Keenan & Naomi Baes. "New York Times Article Corpus (1930-2023)." Retrieved from [GitHub Repository Link].
+Hugo Lyons Keenan & Naomi Baes. "New York Times Article Corpus (1930-2023)." Retrieved from [https://github.com/naomibaes/NYT].
