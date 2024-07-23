@@ -81,6 +81,9 @@ This data statement provides a comprehensive overview of the New York Times Arti
 - Users must comply with the New York Times API terms of service and ensure proper attribution: [NYT API Terms](https://developer.nytimes.com/terms).
 - Consider the ethical implications of the data usage, especially regarding the representation of sensitive topics and historical contexts.
 
+### Acknowledgements: 
+- Code for some scripts were inspired from Salvatore Giorgi's repository: https://osf.io/uya29/
+
 ### Contact:
 - **Compiled by**: Hugo Lyons Keenan & Naomi Baes
 - **Email**: [your-email@example.com](mailto:your-email@example.com)
