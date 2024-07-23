@@ -1,0 +1,94 @@
+{
+    "name": "nyt_corpus",
+    "title": "New York Times Corpus",
+    "description": "Corpus of New York Times articles scraped from their developer API portal.",
+    "doi": "https://github.com/naomibaes/NYT",
+    "version": "0.1",
+    "created": "2024-07-22T14:00:00.000Z",
+    "licenses": [
+        {
+            "title": "Creative Commons Attribution 4.0 International (CC-BY-4.0) ",
+            "name": "CC-BY-4.0",
+            "path": "https://creativecommons.org/licenses/by/4.0/"
+        }
+    ],
+    "sources": [
+        {
+            "title": "The New York Times Developer Network - Archive API",
+            "path": "https://developer.nytimes.com/docs/archive-product/1/overview",
+            "contributors": []
+        }
+    ],
+    "resources": [
+        {
+            "name": "New York Times Articles",
+            "description": "Corpus of NYT article metadata from \"The New York Times Developer Network\" for each month in each year (starting from 1930 onwards, although articles start from 1851).\n\nNote: To run the scripts successfully, you need to get your API key from the NYT Developer site and save it in a file called \"nyt_api_key.txt\"",
+            "path": "https://api.nytimes.com/svc/archive/v1",
+            "doi": "",
+            "format": "csv",
+            "mediatype": "application/json",
+            "bytes": "",
+            "date": "2024-07-22T14:00:00.000Z",
+            "encoding": "",
+            "version": "0.1",
+            "language": "English",
+            "schema": [
+                {
+                    "name": "nyt_corpus.csv",
+                    "type": "csv",
+                    "description": "The final dataset includes the following information from the NYT API: ['title', 'section_name', 'snippet', 'lead_paragraph', 'year', 'month', 'web_url']"
+                }
+            ],
+            "dialect": {
+                "delimiter": "IIIII",
+                "header": true,
+                "doubleQuote": false,
+                "lineTerminator": "",
+                "quoteChar": "",
+                "skipInitialSpace": false
+            }
+        }
+    ],
+    "contributors": [
+        {
+            "title": "Hugo Lyons Keenan",
+            "path": "",
+            "email": "",
+            "role": "author"
+        },
+        {
+            "title": "Naomi Baes",
+            "path": "",
+            "email": "",
+            "role": "author"
+        }
+    ],
+    "privacy": [
+        {
+            "notice": {
+                "path": "",
+                "description": ""
+            },
+            "useTerms": {
+                "path": "",
+                "description": ""
+            },
+            "sensitivity": {
+                "description": "",
+                "types": []
+            },
+            "confidentiality": {
+                "path": "",
+                "description": ""
+            },
+            "assessments": []
+        }
+    ],
+    "security": [],
+    "procedures": {
+        "collection": [],
+        "processing": [],
+        "update": []
+    },
+    "use": []
+}
