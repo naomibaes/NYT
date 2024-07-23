@@ -5,15 +5,22 @@
 **Description**:
 This repository contains scripts to scrape a corpus of articles from "The New York Times Developer Network". Possible year ranges are from 1851 to yesterday, and the code extracts articles for every month in each year. It is intended for research and analysis purposes, providing a comprehensive snapshot of NYT content for the desired period. 
 - *Note*: Due to the NYT Terms of Service, full-text articles are unavailable and so only snippets, lead paragraphs, and titles can be scraped (as of 23/07/2024).
+- *Note*: This is the order of scripts to run to compile your own NYT corpus:
+    1)  "data_downloading.ipynb"
+        - *Aim*: This script retrieves article data from the NYT archive API for a user specified year range and saves it to a file of each month's data before concatenating all individual files into a single CSV file.
+        - *Note*: You must have the "get_corpus.py" file in our repo for this script to run.
+    3)  "corpus_descriptives.ipynb"
+        - *Aim*: This script retrieves article data from the NYT archive API for a user specified year range and saves it to a file of each month's data before concatenating all individual files into a single CSV file.
 
 ## Data Collection Methodology
 
 - **Source**: The New York Times Developer Network
-- **Time Frame**: January 1930 - December 2023
+- **Time Frame**: January 1851 - yesterday
 - **API Endpoint**: `https://api.nytimes.com/svc/archive/v1/{year}/{month}.json?api-key={key}`
 - **Parameters Used**: API key for authentication
 
-## Data Structure (final cleaned "nyt_corpus.csv" dataset)
+## Data Structure 
+- *Note*: Information pertains to the "nyt_corpus.csv" dataset that scripts compile. You may wish to include other metadata.
 
 - **Format**: JSON
 - **Columns**: `['title', 'section_name', 'snippet', 'lead_paragraph', 'year', 'month', 'web_url']`
@@ -26,15 +33,14 @@ This repository contains scripts to scrape a corpus of articles from "The New Yo
   - `month`: Month in which the article was published
   - `web_url`: Article URL
 
-## Data Volume (final cleaned "nyt_corpus.csv" dataset)
+## Data Volume 
+- *Note*: Information pertains to the final cleaned "nyt_corpus.csv" dataset that we compiled within the specified year range.
 
 - **Year Range**: 01/1930 - 12/2023
-- **Total Articles**: 5,000
-- **Total Size**: 100 MB
-- **Breakdown by Section**:
-  - World: 1,200 articles
-  - Business: 800 articles
-  - Technology: 600 articles
+  - Unique values for year: 94; unique values for month: 12
+- **Total Articles**: 10,891,026
+- **Total Size**: 4,062,237 KB
+- **Section Types**: 91 (some may be duplicates due to incorrect parsing, e.g., 'Archives', '|Archives')
 
 ## Usage and Licensing
 
@@ -71,11 +77,21 @@ This data statement provides a comprehensive overview of the New York Times Arti
 - **Development**: Can be utilized in developing machine learning models and natural language processing applications.
 
 ### Quality and Limitations:
-- **Quality Control**: The dataset has undergone cleaning to remove duplicates and incomplete entries.
+- **Quality Control**:
+  - The dataset has undergone cleaning to remedy 116,799 malformed rows and rows where the number of columns did not match the header. Additionally, 79 rows were removed where the year did not meet the specified criteria (not a 4-digit number or not within the range 1930-2023), and rows in the year 1851 were also removed.
 - **Limitations**:
   - The corpus may reflect biases inherent in the New York Times' reporting.
   - Full-text articles are not available, which may limit the depth of certain analyses.
   - The data is as comprehensive as allowed by the API restrictions, focusing on snippets, lead paragraphs, and titles.
+- **NA counts for each column in the final cleaned data frame - "nyt_corpus_cleaned.csv"**:
+  - Number of NA values, total rows, and percentage of NA values in each column:
+  - Column 0: NA Count = 615, Total Rows = 10891026, Percentage = 0.01%
+  - Column 1: NA Count = 2295, Total Rows = 10891026, Percentage = 0.02%
+  - Column 2: NA Count = 4494865, Total Rows = 10891026, Percentage = 41.27%
+  - Column 3: NA Count = 5979376, Total Rows = 10891026, Percentage = 54.90%
+  - Column 4: NA Count = 0, Total Rows = 10891026, Percentage = 0.00%
+  - Column 5: NA Count = 0, Total Rows = 10891026, Percentage = 0.00%
+  - Column 6: NA Count = 0, Total Rows = 10891026, Percentage = 0.00% 
 
 ### Ethical Considerations:
 - Users must comply with the New York Times API terms of service and ensure proper attribution: [NYT API Terms](https://developer.nytimes.com/terms).
@@ -86,7 +102,7 @@ This data statement provides a comprehensive overview of the New York Times Arti
 
 ### Contact:
 - **Compiled by**: Hugo Lyons Keenan & Naomi Baes
-- **Email**: [your-email@example.com](mailto:your-email@example.com)
+- **Emails**: [your-email@example.com](mailto:your-email@example.com) & [naomi_baes@hotmail.com](mailto:naomi_baes@hotmail.com)
 - **Support**: For questions, please contact [your-email@example.com](mailto:your-email@example.com).
 
 ### Citation:
