@@ -52,12 +52,6 @@ This repository contains scripts to scrape a corpus of articles from "The New Yo
 - **Quality Control**: Articles have been cleaned to remove duplicates and incomplete entries.
 - **Known Limitations**: The corpus may contain biases inherent to the New York Times' reporting. Additionally, as full-text articles are not available, tokens are limited, affecting the comprehensiveness of the dataset.
 
-## Contact Information
-
-- **Compiled by**: Hugo Lyons Keenan & Naomi Baes
-- **Email**: [your-email@example.com](mailto:your-email@example.com)
-- **Support**: For questions, please contact [your-email@example.com](mailto:your-email@example.com).
-
 # Data Statement
 
 ### Purpose:
@@ -100,10 +94,10 @@ This data statement provides a comprehensive overview of the New York Times Arti
 ### Acknowledgements: 
 - Code for some scripts were inspired from Salvatore Giorgi's repository: https://osf.io/uya29/
 
-### Contact:
+### Contact Information:
 - **Compiled by**: Hugo Lyons Keenan & Naomi Baes
-- **Emails**: [your-email@example.com](mailto:your-email@example.com) & [naomi_baes@hotmail.com](mailto:naomi_baes@hotmail.com)
-- **Support**: For questions, please contact [your-email@example.com](mailto:your-email@example.com).
+- **Emails**: [hugo0076@gmail.com](mailto:hugo0076@gmail.com) & [naomi_baes@hotmail.com](mailto:naomi_baes@hotmail.com)
+- **Support**: For questions, please contact [hugo0076@gmail.com](mailto:hugo0076@gmail.com).
 
 ### Citation:
 Please cite this corpus as follows:
